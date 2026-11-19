@@ -14,12 +14,17 @@ npm run format  # prettier --write . (Tailwind class sorting via prettier-plugin
 npm run format:check  # prettier --check .
 ```
 
-No test runner is configured yet.
+```bash
+npm test         # vitest run (passes when no tests exist)
+npm run test:watch
+```
+
+Tests are Vitest (`vitest.config.ts`, `@/*` alias via vite-tsconfig-paths), picked up from `src/**/*.test.ts(x)`, node environment. CI (`.github/workflows/ci.yml`) runs lint, typecheck, format:check, and test on push to main and on PRs; it does not run `build`.
 
 ## Conventions
 
 - Formatting is Prettier with default options (`.prettierrc` only adds the Tailwind plugin, pointed at `src/app/globals.css`). Run `npm run format` before finishing; don't hand-format. `eslint-config-prettier` is last in `eslint.config.mjs` to turn off conflicting rules.
-- Before finishing a change, `npm run lint`, `npm run typecheck`, and `npm run format:check` should pass.
+- Before finishing a change, `npm run lint`, `npm run typecheck`, `npm run format:check`, and `npm test` should pass.
 - Use the `@/*` alias for imports from `src/`.
 - The user designs page routes and folder structure themselves. Don't create or move routes (`src/app/**`), component layout, or new folders on your own; ask first or follow the structure the user gives. The route/component lists in `docs/plan.md` are reference drafts, not decisions.
 - Deferred lint rules (add when needed, not now): `import/order`, `@typescript-eslint/consistent-type-imports`.
